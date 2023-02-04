@@ -1,9 +1,12 @@
-
 import './App.css';
 
+
 function App() {
+
+
   return (
     <div className="App">
+
 
 0000 0000 0000 0000
   Jane Appleseed
@@ -25,13 +28,13 @@ function App() {
   e.g. 123
 
   Confirm
+ 
 
   {/* <!-- Completed state start --> */}
 
   Thank you!
   We've added your card details
   Continue
-  
   <div className="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
     Coded by <a href="thomaslawlor.com">Thomas Lawlor</a>.
