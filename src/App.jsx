@@ -1,7 +1,53 @@
 import './App.css';
 
 import Cleave from 'cleave.js/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import styled, { css } from 'styled-components';
+
+
+
+const StyledForm = styled.form`
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+justify-content: center;
+max-width: 24rem;
+padding: 1rem;
+
+  label {
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    gap: 14px;
+    display: flex;
+    color: var(--very-dark-violet);
+    font-size: 15px;
+  }
+  input {
+    border: var(--light-grayish-violet) 1px solid;
+
+    &:focus-visible {
+      outline: none;
+      border: 1px solid;
+      border-image-source: var(--gradient-border);
+    }
+  }
+
+
+  .exp-cvc {
+    display: flex;
+  }
+  .exp div {
+    display: flex;
+  }
+  .error {
+    border: var(--red) 1px solid;
+  }
+  .error-txt {
+    color: var(--red);
+  }
+
+
+`
 
 
 function App() {
@@ -38,7 +84,7 @@ function App() {
     }
     if (cardDetails.expMM.length !== 2) {
       if (!cardDetails.expMM) {
-        setErrors(errors => ({...errors, expMM: "Can't be empty"}))
+        setErrors(errors => ({...errors, expMM: "Can't be blank"}))
       }
       else {
         if (!/^\d+$/.test(cardDetails.expMM)) {
@@ -54,7 +100,7 @@ function App() {
     }
     if (cardDetails.expYY.length !== 2) {
       if (!cardDetails.expYY) {
-        setErrors(errors => ({...errors, expYY: "Can't be empty"}))
+        setErrors(errors => ({...errors, expYY: "Can't be blank"}))
       }
       else {
         if (!/^\d+$/.test(cardDetails.expYY)) {
@@ -70,7 +116,7 @@ function App() {
     }
     if (cardDetails.cvc.length !== 3) {
       if (!cardDetails.cvc) {
-        setErrors(errors => ({...errors, cvc: "Can't be empty"}))
+        setErrors(errors => ({...errors, cvc: "Can't be blank"}))
       }
       else {
         if (!/^\d+$/.test(cardDetails.cvc)) {
@@ -86,21 +132,22 @@ function App() {
     }
     if (cardDetails.name && cardDetails.number.length === 19 && /^(?:[0-9 ]+$)/.test(cardDetails.number) && cardDetails.expMM.length === 2 && /^\d+$/.test(cardDetails.expMM) && cardDetails.expYY.length === 2 && /^\d+$/.test(cardDetails.expYY) && cardDetails.cvc.length === 3 && /^\d+$/.test(cardDetails.cvc)) {
       setSubmitted(true)
-      setCardDetails({name: '', number: "", expMM: "", expYY: "", cvc: ""})
     }
   }
+
   const handleReset = () => {
+    setCardDetails({name: '', number: "", expMM: "", expYY: "", cvc: ""})
     setSubmitted(false)
   }
 
   return (
-    <div className="App">
+    <main className="App">
 
       <ul className="details">
-        <li>{cardDetails.name}</li>
-        <li>{cardDetails.number}</li>
-        <li>{cardDetails.expMM}/{cardDetails.expYY}</li>
-        <li>{cardDetails.cvc}</li>
+        <li>{cardDetails.name ? cardDetails.name : "Jane Appleseed"}</li>
+        <li>{cardDetails.number ? cardDetails.number : '0000 0000 0000 0000'}</li>
+        <li>{cardDetails.expMM ? cardDetails.expMM : '00'}/{cardDetails.expYY ? cardDetails.expYY : "00"}</li>
+        <li>{cardDetails.cvc ? cardDetails.cvc : "000"}</li>
       </ul>
 
       {submitted ? 
@@ -111,15 +158,31 @@ function App() {
         <button onClick={handleReset}>Continue</button>
       </div>
       :
-      <form onSubmit={handleSubmit}>
-        <input type="text" name='name' value={cardDetails.name} onChange={e => handleChange(e)} placeholder="e.g. Jane Appleseed"/>
+      <StyledForm onSubmit={handleSubmit}>
+        <label htmlFor="name">Cardholder Name</label>
+        <input className={errors.name ? 'error name' : "name"} type="text" name='name' id='name' value={cardDetails.name} onChange={e => handleChange(e)} placeholder="e.g. Jane Appleseed"/>
+        <p className="error-txt">{errors.name ? errors.name : null}</p>
         {/* Cleave allows for easier formatting in the credit card method, it includes a creditCard: true option however it detects the card based on the first few numbers and will change the formatting of the number given depending on this i.e. it can be 0000 0000 0000 0000 or 0000 000000 000000*/}
-        <Cleave name="number" value={cardDetails.number} onChange={e => handleChange(e)} placeholder="e.g. 1234 5678 9123 0000" options={{blocks: [4, 4, 4, 4], delimiter: " ", numericOnly: true}} minLength={16}/>
-        <Cleave name='expMM' value={cardDetails.expMM} onChange={e => handleChange(e)} placeholder="MM" maxLength={2} options={{numericOnly: true}}/>
-        <Cleave name='expYY' value={cardDetails.expYY} onChange={e => handleChange(e)} placeholder="YY" maxLength={2} options={{numericOnly: true}}/>
-        <Cleave name='cvc' value={cardDetails.cvc} onChange={e => handleChange(e)} placeholder="e.g. 123" maxLength={3} options={{numericOnly: true}}/>
-        <button>Submit</button>
-      </form>
+        <label htmlFor="number">Card Number</label>
+        <Cleave className={errors.number ? 'error number' : "number"} name="number" id='number' value={cardDetails.number} onChange={e => handleChange(e)} placeholder="e.g. 1234 5678 9123 0000" options={{blocks: [4, 4, 4, 4], delimiter: " ", numericOnly: true}} minLength={16}/>
+        <p className="error-txt">{errors.number ? errors.number : null}</p>
+        <div className="exp-cvc">
+          <div className="exp">
+            <label htmlFor="expMM">Exp. Date (MM/YY)</label>
+            <div>
+              <Cleave className={errors.expMM ? 'error expMM' : "expMM"} name='expMM' id='expMM' value={cardDetails.expMM} onChange={e => handleChange(e)} placeholder="MM" maxLength={2} options={{numericOnly: true}}/>
+              <Cleave className={errors.expYY ? 'error expYY' : "expYY"} name='expYY' id='expYY' value={cardDetails.expYY} onChange={e => handleChange(e)} placeholder="YY" maxLength={2} options={{numericOnly: true}}/>
+            </div>
+              <p className="error-txt">{(errors.expMM || errors.expYY) && errors.expMM ? errors.expMM : (errors.expMM || errors.expYY) && !errors.expMM ? errors.expYY : null }</p>
+          </div>
+          <div className="cvc">
+            <label htmlFor="cvc">CVC</label>
+            <Cleave className={errors.cvc ? 'error cvc' : "cvc"} name='cvc' id='cvc' value={cardDetails.cvc} onChange={e => handleChange(e)} placeholder="e.g. 123" maxLength={3} options={{numericOnly: true}}/>
+            <p className="error-txt">{errors.cvc ? errors.cvc : null}</p>
+          </div>
+        </div>
+        <button>Confirm</button>
+      </StyledForm>
       }
 
 {/* 0000 0000 0000 0000
@@ -153,7 +216,7 @@ function App() {
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
     Coded by <a href="thomaslawlor.com">Thomas Lawlor</a>.
   </div>
-    </div>
+    </main>
   );
 }
 
