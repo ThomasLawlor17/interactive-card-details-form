@@ -34,7 +34,7 @@ max-width: 24rem;
     }
 
     &::placeholder {
-      opacity: 0.7;
+      color: #ceced0;
     }
   }
 
@@ -118,7 +118,7 @@ export default function Form({handleSubmit, handleChange, cardDetails, errors}) 
     {/* Cleave allows for easier formatting in the credit card method, it includes a creditCard: true option however it detects the card based on the first few numbers and will change the formatting of the number given depending on this i.e. it can be 0000 0000 0000 0000 or 0000 000000 000000*/}
     <label htmlFor="number">Card Number</label>
     <Cleave className={errors.number && (cardDetails.number.length !== 19 || !/^(?:[0-9 ]+$)/.test(cardDetails.number)) ? 'error' : null} name="number" id='number' value={cardDetails.number} onChange={e => handleChange(e)} placeholder="e.g. 1234 5678 9123 0000" options={{blocks: [4, 4, 4, 4], delimiter: " ", numericOnly: true}} minLength={16}/>
-    <p className="error-txt">{errors.number && cardDetails.number.length !== 19 || !/^(?:[0-9 ]+$)/.test(cardDetails.number) ? errors.number : null}</p>
+    <p className="error-txt">{errors.number && (cardDetails.number.length !== 19 || !/^(?:[0-9 ]+$)/.test(cardDetails.number)) ? errors.number : null}</p>
     <div className="exp-cvc">
       <div className="exp">
         <label htmlFor="expMM">Exp. Date (MM/YY)</label>
@@ -126,7 +126,7 @@ export default function Form({handleSubmit, handleChange, cardDetails, errors}) 
           <Cleave className={errors.expMM && (cardDetails.expMM.length !== 2 || !/^\d+$/.test(cardDetails.expMM)) ? 'error' : null} name='expMM' id='expMM' value={cardDetails.expMM} onChange={e => handleChange(e)} placeholder="MM" maxLength={2} options={{numericOnly: true}}/>
           <Cleave className={errors.expYY && (cardDetails.expYY.length !== 2 || !/^\d+$/.test(cardDetails.expYY)) ? 'error' : null} name='expYY' id='expYY' value={cardDetails.expYY} onChange={e => handleChange(e)} placeholder="YY" maxLength={2} options={{numericOnly: true}}/>
         </div>
-          <p className="error-txt">{((errors.expMM || errors.expYY) && errors.expMM ) && (cardDetails.expMM.length !== 2 || !/^\d+$/.test(cardDetails.expMM) || cardDetails.expYY.length !== 2 || !/^\d+$/.test(cardDetails.expYY)) ? errors.expMM : ((errors.expMM || errors.expYY) && !errors.expMM) && cardDetails.expMM.length !== 2 || !/^\d+$/.test(cardDetails.expMM) || (cardDetails.expYY.length !== 2 || !/^\d+$/.test(cardDetails.expYY)) ? errors.expYY : null }</p>
+          <p className="error-txt">{((errors.expMM || errors.expYY) && errors.expMM ) && (cardDetails.expMM.length !== 2 || !/^\d+$/.test(cardDetails.expMM) || cardDetails.expYY.length !== 2 || !/^\d+$/.test(cardDetails.expYY)) ? errors.expMM : ((errors.expMM || errors.expYY) && !errors.expMM) && (cardDetails.expMM.length !== 2 || !/^\d+$/.test(cardDetails.expMM) || (cardDetails.expYY.length !== 2 || !/^\d+$/.test(cardDetails.expYY))) ? errors.expYY : null }</p>
       </div>
       <div className="cvc">
         <label htmlFor="cvc">CVC</label>

@@ -15,6 +15,10 @@ justify-content: center;
 align-items: center;
 gap: 130px;
 
+h1 {
+  display: none;
+}
+
 button {
   background: var(--very-dark-violet);
   border: none;

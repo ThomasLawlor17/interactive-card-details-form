@@ -9,13 +9,26 @@ align-items: center;
 gap: 32px;
 
 .card-img {
-  width: calc(450px - 64px);
-  height: calc(249px - 64px);
+  width: calc(450px - 52px);
+  height: calc(249px - 52px);
 	border-radius: 10px;
 	background-size: cover;
 	color: var(--White);
 	position: relative;
-	padding: 32px;
+	padding: 26px;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        box-shadow: 8px 20px 28px var(--light-grayish-violet);
+        z-index: -9999;
+    }
 }
 .card-front {
   background-size: cover;
@@ -23,7 +36,8 @@ gap: 32px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
-  margin-right: 48px;
+    right: 48px;
+    margin-right: 48px;
 
   div {
     display: flex;
@@ -32,8 +46,8 @@ gap: 32px;
     word-spacing: 6px;
 
     span {
-      font-size: 16px;
-      letter-spacing: 2px;
+      font-size: 14px;
+      letter-spacing: 3px;
 
       &:first-child {
         text-transform: uppercase;
@@ -42,7 +56,7 @@ gap: 32px;
   }
 
   > span {
-    font-size: clamp(22px, 2.5vw, 27px);
+    font-size: 28px;
     letter-spacing: 4px;
     margin-bottom: 25px;
     text-align: start;
@@ -63,8 +77,8 @@ gap: 32px;
   span {
     position: absolute;
     right: 60px;
-    top: 109px;
-    font-size: 24px;
+    top: 112px;
+    font-size: 14px;
   }
 }
 @media (max-width: 1275px) {

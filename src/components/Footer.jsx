@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 
-const StyledFooter = styled.footer`
+const StyledDiv = styled.div`
 	position: absolute;
 	bottom: 10px;
 	right: 10px;
@@ -109,7 +109,7 @@ export default function Footer() {
 
 
 	return (
-        <>
+        <footer>
             <StyledSocialList>
                 {socialMedia && socialMedia.map(({ url, name, icon }, i) => (
                     <li key={i}>
@@ -119,10 +119,10 @@ export default function Footer() {
                     </li>
                 ))}
             </StyledSocialList>
-		    <StyledFooter>
+		    <StyledDiv>
 			    <a href="http://thomaslawlor.com/" className="visible">Thomas Lawlor - 2023</a>
 			    <a href="http://thomaslawlor.com/">
-				    <svg id="logo" xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 447 471">
+				    <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 447 471">
 				    	<title>Logo</title>
 					    <path
 					    	d="M 0 0 L 447 0 L 447 170 L 308 170 L 308 336.5 L 307.5 337 L 267 337 L 267 130 L 407 130 L 407 40 L 40.5 40 L 40 40.5 L 40 130 L 0 130 L 0 0 Z "
@@ -155,7 +155,7 @@ export default function Footer() {
 		                <polyline points="22,6 12,13 2,6" />
 	                </svg>
                 </a>
-		    </StyledFooter>
-        </>
+		    </StyledDiv>
+        </footer>
 	);
 }
