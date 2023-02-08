@@ -26,8 +26,10 @@ gap: 32px;
         width: 100%;
         height: 100%;
         background-color: transparent;
-        box-shadow: 8px 20px 28px var(--light-grayish-violet);
-        z-index: -9999;
+        @media (min-width: 770px) {
+          box-shadow: 8px 20px 28px var(--light-grayish-violet);
+          z-index: -9999;
+        }
     }
 }
 .card-front {
@@ -36,8 +38,10 @@ gap: 32px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
+  @media (min-width: 770px) {
     right: 48px;
     margin-right: 48px;
+  }
 
   div {
     display: flex;
@@ -72,7 +76,9 @@ gap: 32px;
   background-size: contain;
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-  margin-left: 48px;
+  @media (min-width: 770px) {
+    margin-left: 48px;
+  }
 
   span {
     position: absolute;
@@ -100,7 +106,7 @@ gap: 32px;
   }
   .card-front {
     bottom: 26px;
-    margin-right: 46px;
+    right: 28px;
 
     div {
       word-spacing: 4px;
@@ -126,7 +132,7 @@ gap: 32px;
 
   .card-back {
     top: 33px;
-    margin-left: 46px;
+    left: 28px;
     z-index: -1;
 
     span {

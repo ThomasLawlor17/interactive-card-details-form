@@ -33,6 +33,10 @@ const StyledDiv = styled.div`
         right: 0;
         text-align: center;
     }
+    @media (max-width: 374px) {
+      scale: 0.8;
+      white-space: nowrap;
+    }
 `;
 
 const StyledSocialList = styled.ul`
